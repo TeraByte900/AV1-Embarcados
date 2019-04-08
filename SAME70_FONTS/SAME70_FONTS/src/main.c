@@ -11,6 +11,14 @@
 #include "calibri_36.h"
 #include "arial_72.h"
 
+#define YEAR        2018
+#define MONTH      3
+#define DAY         19
+#define WEEK        12
+#define HOUR        15
+#define MINUTE      45
+#define SECOND      0
+
 #define BUT1_PIO           PIOD
 #define BUT1_PIO_ID        16
 #define BUT1_PIO_IDX       28u
@@ -28,6 +36,7 @@
 
 volatile int radius = 0.65/2;
 volatile int counter = 0;
+volatile int but_flag = 0;
 
 
 struct ili9488_opt_t g_ili9488_display_opt;
@@ -69,7 +78,8 @@ void BUT2_Handler(){
 }
 
 void BUT3_Handler(){
-	
+	but_flag = 0;
+	counter += 1;
 }
 
 void But_init(){
@@ -78,17 +88,21 @@ void But_init(){
 	pmc_enable_periph_clk(BUT2_PIO_ID);
 	pmc_enable_periph_clk(BUT3_PIO_ID);
 	
-	pio_set_input(BUT1_PIO,BUT1_PIO_IDX_MASK,PIO_DEFAULT);
-	pio_set_input(BUT2_PIO,BUT2_PIO_IDX_MASK,PIO_DEFAULT);
-	pio_set_input(BUT3_PIO,BUT3_PIO_IDX_MASK,PIO_DEFAULT);
+	pio_set_input(BUT1_PIO,BUT1_PIO_IDX_MASK, PIO_PULLUP | PIO_DEBOUNCE);
+	pio_set_input(BUT2_PIO,BUT2_PIO_IDX_MASK, PIO_PULLUP | PIO_DEBOUNCE);
+	pio_set_input(BUT3_PIO,BUT3_PIO_IDX_MASK, PIO_PULLUP | PIO_DEBOUNCE);
 	
 	pio_pull_up(BUT1_PIO, BUT1_PIO_IDX_MASK, 1);
 	pio_pull_up(BUT2_PIO, BUT2_PIO_IDX_MASK, 1);
 	pio_pull_up(BUT3_PIO, BUT3_PIO_IDX_MASK, 1);
 	
-	pio_handler_set(BUT1_PIO, BUT1_PIO_ID, BUT1_PIO_IDX_MASK, PIO_IT_EDGE, BUT1_Handler);
-	pio_handler_set(BUT2_PIO, BUT2_PIO_ID, BUT2_PIO_IDX_MASK, PIO_IT_EDGE, BUT2_Handler);
-	pio_handler_set(BUT3_PIO, BUT3_PIO_ID, BUT3_PIO_IDX_MASK, PIO_IT_EDGE, BUT3_Handler);
+	pio_enable_interrupt(BUT1_PIO, BUT1_PIO_IDX_MASK);
+	pio_enable_interrupt(BUT2_PIO, BUT2_PIO_IDX_MASK);
+	pio_enable_interrupt(BUT3_PIO, BUT3_PIO_IDX_MASK);
+	
+	pio_handler_set(BUT1_PIO, BUT1_PIO_ID, BUT1_PIO_IDX_MASK, PIO_IT_RISE_EDGE, BUT1_Handler);
+	pio_handler_set(BUT2_PIO, BUT2_PIO_ID, BUT2_PIO_IDX_MASK, PIO_IT_RISE_EDGE, BUT2_Handler);
+	pio_handler_set(BUT3_PIO, BUT3_PIO_ID, BUT3_PIO_IDX_MASK, PIO_IT_RISE_EDGE, BUT3_Handler);
 	
 	NVIC_EnableIRQ(BUT1_PIO_ID);
 	NVIC_EnableIRQ(BUT2_PIO_ID);
@@ -99,19 +113,51 @@ void But_init(){
 	NVIC_SetPriority(BUT3_PIO_ID, 1);
 }
 
+void RTC_init(){
+	/* Configura o PMC */
+	pmc_enable_periph_clk(ID_RTC);
+
+	/* Default RTC configuration, 24-hour mode */
+	rtc_set_hour_mode(RTC, 0);
+
+	/* Configura data e hora manualmente */
+	rtc_set_date(RTC, YEAR, MONTH, DAY, WEEK);
+	rtc_set_time(RTC, HOUR, MINUTE, SECOND);
+
+	/* Configure RTC interrupts */
+	NVIC_DisableIRQ(RTC_IRQn);
+	NVIC_ClearPendingIRQ(RTC_IRQn);
+	NVIC_SetPriority(RTC_IRQn, 0);
+	NVIC_EnableIRQ(RTC_IRQn);
+
+	/* Ativa interrupcao via alarme */
+	rtc_enable_interrupt(RTC,  RTC_IER_ALREN);
+
+}
+
 
 int main(void) {
 	board_init();
 	sysclk_init();	
 	configure_lcd();
 	But_init();
+	RTC_init();
 	
 	char speed_buffer[32];
+	char rotation_counter_buffer[8];
 	
-	font_draw_text(&sourcecodepro_28, "BIKE", 50, 50, 1);
-	font_draw_text(&sourcecodepro_28, "VELOCIDADE", 50, 80, 1);
-	font_draw_text(&sourcecodepro_28, speed_buffer, 50, 100, 1);
+	font_draw_text(&calibri_36, "BIKE", 120, 50, 1);
+	font_draw_text(&calibri_36, "VELOCIDADE", 50, 100, 1);
+	font_draw_text(&calibri_36, "DISTANCIA", 50, 200, 1);
+	font_draw_text(&calibri_36, "TEMPO", 50, 300, 1);
+	
+	sprintf(rotation_counter_buffer, "%d", counter);
+	font_draw_text(&calibri_36, rotation_counter_buffer, 50, 400, 1);
 	while(1) {
 		pmc_sleep(SAM_PM_SMODE_SLEEP_WFI);
+		if(but_flag == 0){
+			sprintf(rotation_counter_buffer, "%d", counter);
+			font_draw_text(&calibri_36, rotation_counter_buffer, 50, 400, 1);
+		}
 	}
 }
