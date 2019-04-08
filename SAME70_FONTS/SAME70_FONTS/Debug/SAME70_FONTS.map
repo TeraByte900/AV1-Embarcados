@@ -6948,19 +6948,20 @@ LOAD c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin
                 0x004007e6        0xe src/main.o
                 0x004007e6                BUT2_Handler
  .text.BUT3_Handler
-                0x004007f4       0x38 src/main.o
+                0x004007f4       0x34 src/main.o
                 0x004007f4                BUT3_Handler
  .text.RTT_Handler
-                0x0040082c       0x34 src/main.o
-                0x0040082c                RTT_Handler
+                0x00400828       0x34 src/main.o
+                0x00400828                RTT_Handler
  .text.But_init
-                0x00400860      0x11c src/main.o
-                0x00400860                But_init
+                0x0040085c      0x11c src/main.o
+                0x0040085c                But_init
  .text.RTC_init
-                0x0040097c       0x84 src/main.o
-                0x0040097c                RTC_init
+                0x00400978       0x84 src/main.o
+                0x00400978                RTC_init
  .text.RTT_init
-                0x00400a00       0x98 src/main.o
+                0x004009fc       0x98 src/main.o
+ *fill*         0x00400a94        0x4 
  .text.main     0x00400a98      0x2d0 src/main.o
                 0x00400a98                main
  .text.osc_get_rate

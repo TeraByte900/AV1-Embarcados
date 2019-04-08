@@ -83,7 +83,7 @@ void BUT2_Handler(){
 void BUT3_Handler(){
 	but_flag = 0;
 	counter += 1;
-	dtc += counter;
+	dtc += 1;
 }
 
 void RTT_Handler(void)
@@ -226,7 +226,7 @@ int main(void) {
 			
 			w = 2*3.14*dtc/4;
 			dtc = 0;
-			speed = w*radius/3.6;
+			speed = w*radius*3.6;
 			
 			sprintf(speed_buffer, "%f", speed);
 			font_draw_text(&calibri_36, speed_buffer, 50, 150, 1);         

@@ -46,7 +46,7 @@ Disassembly of section .text:
 	...
   40002c:	45 37 40 00 45 37 40 00 00 00 00 00 45 37 40 00     E7@.E7@.....E7@.
   40003c:	45 37 40 00 45 37 40 00 45 37 40 00 45 37 40 00     E7@.E7@.E7@.E7@.
-  40004c:	2d 08 40 00 45 37 40 00 45 37 40 00 45 37 40 00     -.@.E7@.E7@.E7@.
+  40004c:	29 08 40 00 45 37 40 00 45 37 40 00 45 37 40 00     ).@.E7@.E7@.E7@.
   40005c:	45 37 40 00 45 37 40 00 00 00 00 00 4d 2e 40 00     E7@.E7@.....M.@.
   40006c:	65 2e 40 00 7d 2e 40 00 45 37 40 00 45 37 40 00     e.@.}.@.E7@.E7@.
   40007c:	45 37 40 00 95 2e 40 00 ad 2e 40 00 45 37 40 00     E7@...@...@.E7@.
@@ -1143,391 +1143,390 @@ void BUT3_Handler(){
   4007f4:	b480      	push	{r7}
   4007f6:	af00      	add	r7, sp, #0
 	but_flag = 0;
-  4007f8:	4b09      	ldr	r3, [pc, #36]	; (400820 <BUT3_Handler+0x2c>)
+  4007f8:	4b08      	ldr	r3, [pc, #32]	; (40081c <BUT3_Handler+0x28>)
   4007fa:	2200      	movs	r2, #0
   4007fc:	601a      	str	r2, [r3, #0]
 	counter += 1;
-  4007fe:	4b09      	ldr	r3, [pc, #36]	; (400824 <BUT3_Handler+0x30>)
+  4007fe:	4b08      	ldr	r3, [pc, #32]	; (400820 <BUT3_Handler+0x2c>)
   400800:	681b      	ldr	r3, [r3, #0]
   400802:	3301      	adds	r3, #1
-  400804:	4a07      	ldr	r2, [pc, #28]	; (400824 <BUT3_Handler+0x30>)
+  400804:	4a06      	ldr	r2, [pc, #24]	; (400820 <BUT3_Handler+0x2c>)
   400806:	6013      	str	r3, [r2, #0]
-	dtc += counter;
+	dtc += 1;
   400808:	4b06      	ldr	r3, [pc, #24]	; (400824 <BUT3_Handler+0x30>)
-  40080a:	681a      	ldr	r2, [r3, #0]
-  40080c:	4b06      	ldr	r3, [pc, #24]	; (400828 <BUT3_Handler+0x34>)
-  40080e:	681b      	ldr	r3, [r3, #0]
-  400810:	4413      	add	r3, r2
-  400812:	4a05      	ldr	r2, [pc, #20]	; (400828 <BUT3_Handler+0x34>)
-  400814:	6013      	str	r3, [r2, #0]
+  40080a:	681b      	ldr	r3, [r3, #0]
+  40080c:	3301      	adds	r3, #1
+  40080e:	4a05      	ldr	r2, [pc, #20]	; (400824 <BUT3_Handler+0x30>)
+  400810:	6013      	str	r3, [r2, #0]
 }
-  400816:	bf00      	nop
-  400818:	46bd      	mov	sp, r7
-  40081a:	f85d 7b04 	ldr.w	r7, [sp], #4
-  40081e:	4770      	bx	lr
-  400820:	204009e4 	.word	0x204009e4
-  400824:	204009e0 	.word	0x204009e0
-  400828:	204009e8 	.word	0x204009e8
+  400812:	bf00      	nop
+  400814:	46bd      	mov	sp, r7
+  400816:	f85d 7b04 	ldr.w	r7, [sp], #4
+  40081a:	4770      	bx	lr
+  40081c:	204009e4 	.word	0x204009e4
+  400820:	204009e0 	.word	0x204009e0
+  400824:	204009e8 	.word	0x204009e8
 
-0040082c <RTT_Handler>:
+00400828 <RTT_Handler>:
 
 void RTT_Handler(void)
 {
-  40082c:	b580      	push	{r7, lr}
-  40082e:	b082      	sub	sp, #8
-  400830:	af00      	add	r7, sp, #0
+  400828:	b580      	push	{r7, lr}
+  40082a:	b082      	sub	sp, #8
+  40082c:	af00      	add	r7, sp, #0
 	uint32_t ul_status;
 
 	/* Get RTT status */
 	ul_status = rtt_get_status(RTT);
-  400832:	4808      	ldr	r0, [pc, #32]	; (400854 <RTT_Handler+0x28>)
-  400834:	4b08      	ldr	r3, [pc, #32]	; (400858 <RTT_Handler+0x2c>)
-  400836:	4798      	blx	r3
-  400838:	6078      	str	r0, [r7, #4]
+  40082e:	4808      	ldr	r0, [pc, #32]	; (400850 <RTT_Handler+0x28>)
+  400830:	4b08      	ldr	r3, [pc, #32]	; (400854 <RTT_Handler+0x2c>)
+  400832:	4798      	blx	r3
+  400834:	6078      	str	r0, [r7, #4]
 
 	/* IRQ due to Time has changed */
 	if ((ul_status & RTT_SR_RTTINC) == RTT_SR_RTTINC) {  }
 
 	/* IRQ due to Alarm */
 	if ((ul_status & RTT_SR_ALMS) == RTT_SR_ALMS) {// BLINK Led
-  40083a:	687b      	ldr	r3, [r7, #4]
-  40083c:	f003 0301 	and.w	r3, r3, #1
-  400840:	2b00      	cmp	r3, #0
-  400842:	d002      	beq.n	40084a <RTT_Handler+0x1e>
+  400836:	687b      	ldr	r3, [r7, #4]
+  400838:	f003 0301 	and.w	r3, r3, #1
+  40083c:	2b00      	cmp	r3, #0
+  40083e:	d002      	beq.n	400846 <RTT_Handler+0x1e>
 		f_rtt_alarme = true;                  // flag RTT alarme
-  400844:	4b05      	ldr	r3, [pc, #20]	; (40085c <RTT_Handler+0x30>)
-  400846:	2201      	movs	r2, #1
-  400848:	701a      	strb	r2, [r3, #0]
+  400840:	4b05      	ldr	r3, [pc, #20]	; (400858 <RTT_Handler+0x30>)
+  400842:	2201      	movs	r2, #1
+  400844:	701a      	strb	r2, [r3, #0]
 	}
 }
-  40084a:	bf00      	nop
-  40084c:	3708      	adds	r7, #8
-  40084e:	46bd      	mov	sp, r7
-  400850:	bd80      	pop	{r7, pc}
-  400852:	bf00      	nop
-  400854:	400e1830 	.word	0x400e1830
-  400858:	0040059f 	.word	0x0040059f
-  40085c:	204009ec 	.word	0x204009ec
+  400846:	bf00      	nop
+  400848:	3708      	adds	r7, #8
+  40084a:	46bd      	mov	sp, r7
+  40084c:	bd80      	pop	{r7, pc}
+  40084e:	bf00      	nop
+  400850:	400e1830 	.word	0x400e1830
+  400854:	0040059f 	.word	0x0040059f
+  400858:	204009ec 	.word	0x204009ec
 
-00400860 <But_init>:
+0040085c <But_init>:
 
 void But_init(){
-  400860:	b590      	push	{r4, r7, lr}
-  400862:	b083      	sub	sp, #12
-  400864:	af02      	add	r7, sp, #8
+  40085c:	b590      	push	{r4, r7, lr}
+  40085e:	b083      	sub	sp, #12
+  400860:	af02      	add	r7, sp, #8
 	
 	pmc_enable_periph_clk(BUT1_PIO_ID);
-  400866:	2010      	movs	r0, #16
-  400868:	4b37      	ldr	r3, [pc, #220]	; (400948 <But_init+0xe8>)
-  40086a:	4798      	blx	r3
+  400862:	2010      	movs	r0, #16
+  400864:	4b37      	ldr	r3, [pc, #220]	; (400944 <But_init+0xe8>)
+  400866:	4798      	blx	r3
 	pmc_enable_periph_clk(BUT2_PIO_ID);
-  40086c:	200c      	movs	r0, #12
-  40086e:	4b36      	ldr	r3, [pc, #216]	; (400948 <But_init+0xe8>)
-  400870:	4798      	blx	r3
+  400868:	200c      	movs	r0, #12
+  40086a:	4b36      	ldr	r3, [pc, #216]	; (400944 <But_init+0xe8>)
+  40086c:	4798      	blx	r3
 	pmc_enable_periph_clk(BUT3_PIO_ID);
-  400872:	200a      	movs	r0, #10
-  400874:	4b34      	ldr	r3, [pc, #208]	; (400948 <But_init+0xe8>)
-  400876:	4798      	blx	r3
+  40086e:	200a      	movs	r0, #10
+  400870:	4b34      	ldr	r3, [pc, #208]	; (400944 <But_init+0xe8>)
+  400872:	4798      	blx	r3
 	
 	pio_set_input(BUT1_PIO,BUT1_PIO_IDX_MASK, PIO_PULLUP | PIO_DEBOUNCE);
-  400878:	2209      	movs	r2, #9
-  40087a:	f04f 5180 	mov.w	r1, #268435456	; 0x10000000
-  40087e:	4833      	ldr	r0, [pc, #204]	; (40094c <But_init+0xec>)
-  400880:	4b33      	ldr	r3, [pc, #204]	; (400950 <But_init+0xf0>)
-  400882:	4798      	blx	r3
+  400874:	2209      	movs	r2, #9
+  400876:	f04f 5180 	mov.w	r1, #268435456	; 0x10000000
+  40087a:	4833      	ldr	r0, [pc, #204]	; (400948 <But_init+0xec>)
+  40087c:	4b33      	ldr	r3, [pc, #204]	; (40094c <But_init+0xf0>)
+  40087e:	4798      	blx	r3
 	pio_set_input(BUT2_PIO,BUT2_PIO_IDX_MASK, PIO_PULLUP | PIO_DEBOUNCE);
-  400884:	2209      	movs	r2, #9
-  400886:	f04f 4100 	mov.w	r1, #2147483648	; 0x80000000
-  40088a:	4832      	ldr	r0, [pc, #200]	; (400954 <But_init+0xf4>)
-  40088c:	4b30      	ldr	r3, [pc, #192]	; (400950 <But_init+0xf0>)
-  40088e:	4798      	blx	r3
+  400880:	2209      	movs	r2, #9
+  400882:	f04f 4100 	mov.w	r1, #2147483648	; 0x80000000
+  400886:	4832      	ldr	r0, [pc, #200]	; (400950 <But_init+0xf4>)
+  400888:	4b30      	ldr	r3, [pc, #192]	; (40094c <But_init+0xf0>)
+  40088a:	4798      	blx	r3
 	pio_set_input(BUT3_PIO,BUT3_PIO_IDX_MASK, PIO_PULLUP | PIO_DEBOUNCE);
-  400890:	2209      	movs	r2, #9
-  400892:	f44f 2100 	mov.w	r1, #524288	; 0x80000
-  400896:	4830      	ldr	r0, [pc, #192]	; (400958 <But_init+0xf8>)
-  400898:	4b2d      	ldr	r3, [pc, #180]	; (400950 <But_init+0xf0>)
-  40089a:	4798      	blx	r3
+  40088c:	2209      	movs	r2, #9
+  40088e:	f44f 2100 	mov.w	r1, #524288	; 0x80000
+  400892:	4830      	ldr	r0, [pc, #192]	; (400954 <But_init+0xf8>)
+  400894:	4b2d      	ldr	r3, [pc, #180]	; (40094c <But_init+0xf0>)
+  400896:	4798      	blx	r3
 	
 	pio_pull_up(BUT1_PIO, BUT1_PIO_IDX_MASK, 1);
-  40089c:	2201      	movs	r2, #1
-  40089e:	f04f 5180 	mov.w	r1, #268435456	; 0x10000000
-  4008a2:	482a      	ldr	r0, [pc, #168]	; (40094c <But_init+0xec>)
-  4008a4:	4b2d      	ldr	r3, [pc, #180]	; (40095c <But_init+0xfc>)
-  4008a6:	4798      	blx	r3
+  400898:	2201      	movs	r2, #1
+  40089a:	f04f 5180 	mov.w	r1, #268435456	; 0x10000000
+  40089e:	482a      	ldr	r0, [pc, #168]	; (400948 <But_init+0xec>)
+  4008a0:	4b2d      	ldr	r3, [pc, #180]	; (400958 <But_init+0xfc>)
+  4008a2:	4798      	blx	r3
 	pio_pull_up(BUT2_PIO, BUT2_PIO_IDX_MASK, 1);
-  4008a8:	2201      	movs	r2, #1
-  4008aa:	f04f 4100 	mov.w	r1, #2147483648	; 0x80000000
-  4008ae:	4829      	ldr	r0, [pc, #164]	; (400954 <But_init+0xf4>)
-  4008b0:	4b2a      	ldr	r3, [pc, #168]	; (40095c <But_init+0xfc>)
-  4008b2:	4798      	blx	r3
+  4008a4:	2201      	movs	r2, #1
+  4008a6:	f04f 4100 	mov.w	r1, #2147483648	; 0x80000000
+  4008aa:	4829      	ldr	r0, [pc, #164]	; (400950 <But_init+0xf4>)
+  4008ac:	4b2a      	ldr	r3, [pc, #168]	; (400958 <But_init+0xfc>)
+  4008ae:	4798      	blx	r3
 	pio_pull_up(BUT3_PIO, BUT3_PIO_IDX_MASK, 1);
-  4008b4:	2201      	movs	r2, #1
-  4008b6:	f44f 2100 	mov.w	r1, #524288	; 0x80000
-  4008ba:	4827      	ldr	r0, [pc, #156]	; (400958 <But_init+0xf8>)
-  4008bc:	4b27      	ldr	r3, [pc, #156]	; (40095c <But_init+0xfc>)
-  4008be:	4798      	blx	r3
+  4008b0:	2201      	movs	r2, #1
+  4008b2:	f44f 2100 	mov.w	r1, #524288	; 0x80000
+  4008b6:	4827      	ldr	r0, [pc, #156]	; (400954 <But_init+0xf8>)
+  4008b8:	4b27      	ldr	r3, [pc, #156]	; (400958 <But_init+0xfc>)
+  4008ba:	4798      	blx	r3
 	
 	pio_enable_interrupt(BUT1_PIO, BUT1_PIO_IDX_MASK);
-  4008c0:	f04f 5180 	mov.w	r1, #268435456	; 0x10000000
-  4008c4:	4821      	ldr	r0, [pc, #132]	; (40094c <But_init+0xec>)
-  4008c6:	4b26      	ldr	r3, [pc, #152]	; (400960 <But_init+0x100>)
-  4008c8:	4798      	blx	r3
+  4008bc:	f04f 5180 	mov.w	r1, #268435456	; 0x10000000
+  4008c0:	4821      	ldr	r0, [pc, #132]	; (400948 <But_init+0xec>)
+  4008c2:	4b26      	ldr	r3, [pc, #152]	; (40095c <But_init+0x100>)
+  4008c4:	4798      	blx	r3
 	pio_enable_interrupt(BUT2_PIO, BUT2_PIO_IDX_MASK);
-  4008ca:	f04f 4100 	mov.w	r1, #2147483648	; 0x80000000
-  4008ce:	4821      	ldr	r0, [pc, #132]	; (400954 <But_init+0xf4>)
-  4008d0:	4b23      	ldr	r3, [pc, #140]	; (400960 <But_init+0x100>)
-  4008d2:	4798      	blx	r3
+  4008c6:	f04f 4100 	mov.w	r1, #2147483648	; 0x80000000
+  4008ca:	4821      	ldr	r0, [pc, #132]	; (400950 <But_init+0xf4>)
+  4008cc:	4b23      	ldr	r3, [pc, #140]	; (40095c <But_init+0x100>)
+  4008ce:	4798      	blx	r3
 	pio_enable_interrupt(BUT3_PIO, BUT3_PIO_IDX_MASK);
-  4008d4:	f44f 2100 	mov.w	r1, #524288	; 0x80000
-  4008d8:	481f      	ldr	r0, [pc, #124]	; (400958 <But_init+0xf8>)
-  4008da:	4b21      	ldr	r3, [pc, #132]	; (400960 <But_init+0x100>)
-  4008dc:	4798      	blx	r3
+  4008d0:	f44f 2100 	mov.w	r1, #524288	; 0x80000
+  4008d4:	481f      	ldr	r0, [pc, #124]	; (400954 <But_init+0xf8>)
+  4008d6:	4b21      	ldr	r3, [pc, #132]	; (40095c <But_init+0x100>)
+  4008d8:	4798      	blx	r3
 	
 	pio_handler_set(BUT1_PIO, BUT1_PIO_ID, BUT1_PIO_IDX_MASK, PIO_IT_RISE_EDGE, BUT1_Handler);
-  4008de:	4b21      	ldr	r3, [pc, #132]	; (400964 <But_init+0x104>)
-  4008e0:	9300      	str	r3, [sp, #0]
-  4008e2:	2370      	movs	r3, #112	; 0x70
-  4008e4:	f04f 5280 	mov.w	r2, #268435456	; 0x10000000
-  4008e8:	2110      	movs	r1, #16
-  4008ea:	4818      	ldr	r0, [pc, #96]	; (40094c <But_init+0xec>)
-  4008ec:	4c1e      	ldr	r4, [pc, #120]	; (400968 <But_init+0x108>)
-  4008ee:	47a0      	blx	r4
+  4008da:	4b21      	ldr	r3, [pc, #132]	; (400960 <But_init+0x104>)
+  4008dc:	9300      	str	r3, [sp, #0]
+  4008de:	2370      	movs	r3, #112	; 0x70
+  4008e0:	f04f 5280 	mov.w	r2, #268435456	; 0x10000000
+  4008e4:	2110      	movs	r1, #16
+  4008e6:	4818      	ldr	r0, [pc, #96]	; (400948 <But_init+0xec>)
+  4008e8:	4c1e      	ldr	r4, [pc, #120]	; (400964 <But_init+0x108>)
+  4008ea:	47a0      	blx	r4
 	pio_handler_set(BUT2_PIO, BUT2_PIO_ID, BUT2_PIO_IDX_MASK, PIO_IT_RISE_EDGE, BUT2_Handler);
-  4008f0:	4b1e      	ldr	r3, [pc, #120]	; (40096c <But_init+0x10c>)
-  4008f2:	9300      	str	r3, [sp, #0]
-  4008f4:	2370      	movs	r3, #112	; 0x70
-  4008f6:	f04f 4200 	mov.w	r2, #2147483648	; 0x80000000
-  4008fa:	210c      	movs	r1, #12
-  4008fc:	4815      	ldr	r0, [pc, #84]	; (400954 <But_init+0xf4>)
-  4008fe:	4c1a      	ldr	r4, [pc, #104]	; (400968 <But_init+0x108>)
-  400900:	47a0      	blx	r4
+  4008ec:	4b1e      	ldr	r3, [pc, #120]	; (400968 <But_init+0x10c>)
+  4008ee:	9300      	str	r3, [sp, #0]
+  4008f0:	2370      	movs	r3, #112	; 0x70
+  4008f2:	f04f 4200 	mov.w	r2, #2147483648	; 0x80000000
+  4008f6:	210c      	movs	r1, #12
+  4008f8:	4815      	ldr	r0, [pc, #84]	; (400950 <But_init+0xf4>)
+  4008fa:	4c1a      	ldr	r4, [pc, #104]	; (400964 <But_init+0x108>)
+  4008fc:	47a0      	blx	r4
 	pio_handler_set(BUT3_PIO, BUT3_PIO_ID, BUT3_PIO_IDX_MASK, PIO_IT_RISE_EDGE, BUT3_Handler);
-  400902:	4b1b      	ldr	r3, [pc, #108]	; (400970 <But_init+0x110>)
-  400904:	9300      	str	r3, [sp, #0]
-  400906:	2370      	movs	r3, #112	; 0x70
-  400908:	f44f 2200 	mov.w	r2, #524288	; 0x80000
-  40090c:	210a      	movs	r1, #10
-  40090e:	4812      	ldr	r0, [pc, #72]	; (400958 <But_init+0xf8>)
-  400910:	4c15      	ldr	r4, [pc, #84]	; (400968 <But_init+0x108>)
-  400912:	47a0      	blx	r4
+  4008fe:	4b1b      	ldr	r3, [pc, #108]	; (40096c <But_init+0x110>)
+  400900:	9300      	str	r3, [sp, #0]
+  400902:	2370      	movs	r3, #112	; 0x70
+  400904:	f44f 2200 	mov.w	r2, #524288	; 0x80000
+  400908:	210a      	movs	r1, #10
+  40090a:	4812      	ldr	r0, [pc, #72]	; (400954 <But_init+0xf8>)
+  40090c:	4c15      	ldr	r4, [pc, #84]	; (400964 <But_init+0x108>)
+  40090e:	47a0      	blx	r4
 	
 	NVIC_EnableIRQ(BUT1_PIO_ID);
-  400914:	2010      	movs	r0, #16
-  400916:	4b17      	ldr	r3, [pc, #92]	; (400974 <But_init+0x114>)
-  400918:	4798      	blx	r3
+  400910:	2010      	movs	r0, #16
+  400912:	4b17      	ldr	r3, [pc, #92]	; (400970 <But_init+0x114>)
+  400914:	4798      	blx	r3
 	NVIC_EnableIRQ(BUT2_PIO_ID);
-  40091a:	200c      	movs	r0, #12
-  40091c:	4b15      	ldr	r3, [pc, #84]	; (400974 <But_init+0x114>)
-  40091e:	4798      	blx	r3
+  400916:	200c      	movs	r0, #12
+  400918:	4b15      	ldr	r3, [pc, #84]	; (400970 <But_init+0x114>)
+  40091a:	4798      	blx	r3
 	NVIC_EnableIRQ(BUT3_PIO_ID);
-  400920:	200a      	movs	r0, #10
-  400922:	4b14      	ldr	r3, [pc, #80]	; (400974 <But_init+0x114>)
-  400924:	4798      	blx	r3
+  40091c:	200a      	movs	r0, #10
+  40091e:	4b14      	ldr	r3, [pc, #80]	; (400970 <But_init+0x114>)
+  400920:	4798      	blx	r3
 		
 	NVIC_SetPriority(BUT1_PIO_ID, 1);
-  400926:	2101      	movs	r1, #1
-  400928:	2010      	movs	r0, #16
-  40092a:	4b13      	ldr	r3, [pc, #76]	; (400978 <But_init+0x118>)
-  40092c:	4798      	blx	r3
+  400922:	2101      	movs	r1, #1
+  400924:	2010      	movs	r0, #16
+  400926:	4b13      	ldr	r3, [pc, #76]	; (400974 <But_init+0x118>)
+  400928:	4798      	blx	r3
 	NVIC_SetPriority(BUT2_PIO_ID, 1);
-  40092e:	2101      	movs	r1, #1
-  400930:	200c      	movs	r0, #12
-  400932:	4b11      	ldr	r3, [pc, #68]	; (400978 <But_init+0x118>)
-  400934:	4798      	blx	r3
+  40092a:	2101      	movs	r1, #1
+  40092c:	200c      	movs	r0, #12
+  40092e:	4b11      	ldr	r3, [pc, #68]	; (400974 <But_init+0x118>)
+  400930:	4798      	blx	r3
 	NVIC_SetPriority(BUT3_PIO_ID, 1);
-  400936:	2101      	movs	r1, #1
-  400938:	200a      	movs	r0, #10
-  40093a:	4b0f      	ldr	r3, [pc, #60]	; (400978 <But_init+0x118>)
-  40093c:	4798      	blx	r3
+  400932:	2101      	movs	r1, #1
+  400934:	200a      	movs	r0, #10
+  400936:	4b0f      	ldr	r3, [pc, #60]	; (400974 <But_init+0x118>)
+  400938:	4798      	blx	r3
 }
-  40093e:	bf00      	nop
-  400940:	3704      	adds	r7, #4
-  400942:	46bd      	mov	sp, r7
-  400944:	bd90      	pop	{r4, r7, pc}
-  400946:	bf00      	nop
-  400948:	00403189 	.word	0x00403189
-  40094c:	400e1400 	.word	0x400e1400
-  400950:	0040283d 	.word	0x0040283d
-  400954:	400e1200 	.word	0x400e1200
-  400958:	400e0e00 	.word	0x400e0e00
-  40095c:	004026e5 	.word	0x004026e5
-  400960:	00402a59 	.word	0x00402a59
-  400964:	004007d9 	.word	0x004007d9
-  400968:	00402dad 	.word	0x00402dad
-  40096c:	004007e7 	.word	0x004007e7
-  400970:	004007f5 	.word	0x004007f5
-  400974:	00400615 	.word	0x00400615
-  400978:	004006b1 	.word	0x004006b1
+  40093a:	bf00      	nop
+  40093c:	3704      	adds	r7, #4
+  40093e:	46bd      	mov	sp, r7
+  400940:	bd90      	pop	{r4, r7, pc}
+  400942:	bf00      	nop
+  400944:	00403189 	.word	0x00403189
+  400948:	400e1400 	.word	0x400e1400
+  40094c:	0040283d 	.word	0x0040283d
+  400950:	400e1200 	.word	0x400e1200
+  400954:	400e0e00 	.word	0x400e0e00
+  400958:	004026e5 	.word	0x004026e5
+  40095c:	00402a59 	.word	0x00402a59
+  400960:	004007d9 	.word	0x004007d9
+  400964:	00402dad 	.word	0x00402dad
+  400968:	004007e7 	.word	0x004007e7
+  40096c:	004007f5 	.word	0x004007f5
+  400970:	00400615 	.word	0x00400615
+  400974:	004006b1 	.word	0x004006b1
 
-0040097c <RTC_init>:
+00400978 <RTC_init>:
 
 void RTC_init(){
-  40097c:	b590      	push	{r4, r7, lr}
-  40097e:	b083      	sub	sp, #12
-  400980:	af02      	add	r7, sp, #8
+  400978:	b590      	push	{r4, r7, lr}
+  40097a:	b083      	sub	sp, #12
+  40097c:	af02      	add	r7, sp, #8
 	/* Configura o PMC */
 	pmc_enable_periph_clk(ID_RTC);
-  400982:	2002      	movs	r0, #2
-  400984:	4b14      	ldr	r3, [pc, #80]	; (4009d8 <RTC_init+0x5c>)
-  400986:	4798      	blx	r3
+  40097e:	2002      	movs	r0, #2
+  400980:	4b14      	ldr	r3, [pc, #80]	; (4009d4 <RTC_init+0x5c>)
+  400982:	4798      	blx	r3
 
 	/* Default RTC configuration, 24-hour mode */
 	rtc_set_hour_mode(RTC, 0);
-  400988:	2100      	movs	r1, #0
-  40098a:	4814      	ldr	r0, [pc, #80]	; (4009dc <RTC_init+0x60>)
-  40098c:	4b14      	ldr	r3, [pc, #80]	; (4009e0 <RTC_init+0x64>)
-  40098e:	4798      	blx	r3
+  400984:	2100      	movs	r1, #0
+  400986:	4814      	ldr	r0, [pc, #80]	; (4009d8 <RTC_init+0x60>)
+  400988:	4b14      	ldr	r3, [pc, #80]	; (4009dc <RTC_init+0x64>)
+  40098a:	4798      	blx	r3
 
 	/* Configura data e hora manualmente */
 	rtc_set_date(RTC, YEAR, MONTH, DAY, WEEK);
-  400990:	230c      	movs	r3, #12
-  400992:	9300      	str	r3, [sp, #0]
-  400994:	2313      	movs	r3, #19
-  400996:	2203      	movs	r2, #3
-  400998:	f240 71e2 	movw	r1, #2018	; 0x7e2
-  40099c:	480f      	ldr	r0, [pc, #60]	; (4009dc <RTC_init+0x60>)
-  40099e:	4c11      	ldr	r4, [pc, #68]	; (4009e4 <RTC_init+0x68>)
-  4009a0:	47a0      	blx	r4
+  40098c:	230c      	movs	r3, #12
+  40098e:	9300      	str	r3, [sp, #0]
+  400990:	2313      	movs	r3, #19
+  400992:	2203      	movs	r2, #3
+  400994:	f240 71e2 	movw	r1, #2018	; 0x7e2
+  400998:	480f      	ldr	r0, [pc, #60]	; (4009d8 <RTC_init+0x60>)
+  40099a:	4c11      	ldr	r4, [pc, #68]	; (4009e0 <RTC_init+0x68>)
+  40099c:	47a0      	blx	r4
 	rtc_set_time(RTC, HOUR, MINUTE, SECOND);
-  4009a2:	2300      	movs	r3, #0
-  4009a4:	222d      	movs	r2, #45	; 0x2d
-  4009a6:	210f      	movs	r1, #15
-  4009a8:	480c      	ldr	r0, [pc, #48]	; (4009dc <RTC_init+0x60>)
-  4009aa:	4c0f      	ldr	r4, [pc, #60]	; (4009e8 <RTC_init+0x6c>)
-  4009ac:	47a0      	blx	r4
+  40099e:	2300      	movs	r3, #0
+  4009a0:	222d      	movs	r2, #45	; 0x2d
+  4009a2:	210f      	movs	r1, #15
+  4009a4:	480c      	ldr	r0, [pc, #48]	; (4009d8 <RTC_init+0x60>)
+  4009a6:	4c0f      	ldr	r4, [pc, #60]	; (4009e4 <RTC_init+0x6c>)
+  4009a8:	47a0      	blx	r4
 
 	/* Configure RTC interrupts */
 	NVIC_DisableIRQ(RTC_IRQn);
-  4009ae:	2002      	movs	r0, #2
-  4009b0:	4b0e      	ldr	r3, [pc, #56]	; (4009ec <RTC_init+0x70>)
-  4009b2:	4798      	blx	r3
+  4009aa:	2002      	movs	r0, #2
+  4009ac:	4b0e      	ldr	r3, [pc, #56]	; (4009e8 <RTC_init+0x70>)
+  4009ae:	4798      	blx	r3
 	NVIC_ClearPendingIRQ(RTC_IRQn);
-  4009b4:	2002      	movs	r0, #2
-  4009b6:	4b0e      	ldr	r3, [pc, #56]	; (4009f0 <RTC_init+0x74>)
-  4009b8:	4798      	blx	r3
+  4009b0:	2002      	movs	r0, #2
+  4009b2:	4b0e      	ldr	r3, [pc, #56]	; (4009ec <RTC_init+0x74>)
+  4009b4:	4798      	blx	r3
 	NVIC_SetPriority(RTC_IRQn, 0);
-  4009ba:	2100      	movs	r1, #0
-  4009bc:	2002      	movs	r0, #2
-  4009be:	4b0d      	ldr	r3, [pc, #52]	; (4009f4 <RTC_init+0x78>)
-  4009c0:	4798      	blx	r3
+  4009b6:	2100      	movs	r1, #0
+  4009b8:	2002      	movs	r0, #2
+  4009ba:	4b0d      	ldr	r3, [pc, #52]	; (4009f0 <RTC_init+0x78>)
+  4009bc:	4798      	blx	r3
 	NVIC_EnableIRQ(RTC_IRQn);
-  4009c2:	2002      	movs	r0, #2
-  4009c4:	4b0c      	ldr	r3, [pc, #48]	; (4009f8 <RTC_init+0x7c>)
-  4009c6:	4798      	blx	r3
+  4009be:	2002      	movs	r0, #2
+  4009c0:	4b0c      	ldr	r3, [pc, #48]	; (4009f4 <RTC_init+0x7c>)
+  4009c2:	4798      	blx	r3
 
 	/* Ativa interrupcao via alarme */
 	rtc_enable_interrupt(RTC,  RTC_IER_ALREN);
-  4009c8:	2102      	movs	r1, #2
-  4009ca:	4804      	ldr	r0, [pc, #16]	; (4009dc <RTC_init+0x60>)
-  4009cc:	4b0b      	ldr	r3, [pc, #44]	; (4009fc <RTC_init+0x80>)
-  4009ce:	4798      	blx	r3
+  4009c4:	2102      	movs	r1, #2
+  4009c6:	4804      	ldr	r0, [pc, #16]	; (4009d8 <RTC_init+0x60>)
+  4009c8:	4b0b      	ldr	r3, [pc, #44]	; (4009f8 <RTC_init+0x80>)
+  4009ca:	4798      	blx	r3
 
 }
-  4009d0:	bf00      	nop
-  4009d2:	3704      	adds	r7, #4
-  4009d4:	46bd      	mov	sp, r7
-  4009d6:	bd90      	pop	{r4, r7, pc}
-  4009d8:	00403189 	.word	0x00403189
-  4009dc:	400e1860 	.word	0x400e1860
-  4009e0:	004001d5 	.word	0x004001d5
-  4009e4:	00400331 	.word	0x00400331
-  4009e8:	00400229 	.word	0x00400229
-  4009ec:	00400649 	.word	0x00400649
-  4009f0:	0040067d 	.word	0x0040067d
-  4009f4:	004006b1 	.word	0x004006b1
-  4009f8:	00400615 	.word	0x00400615
-  4009fc:	0040020b 	.word	0x0040020b
+  4009cc:	bf00      	nop
+  4009ce:	3704      	adds	r7, #4
+  4009d0:	46bd      	mov	sp, r7
+  4009d2:	bd90      	pop	{r4, r7, pc}
+  4009d4:	00403189 	.word	0x00403189
+  4009d8:	400e1860 	.word	0x400e1860
+  4009dc:	004001d5 	.word	0x004001d5
+  4009e0:	00400331 	.word	0x00400331
+  4009e4:	00400229 	.word	0x00400229
+  4009e8:	00400649 	.word	0x00400649
+  4009ec:	0040067d 	.word	0x0040067d
+  4009f0:	004006b1 	.word	0x004006b1
+  4009f4:	00400615 	.word	0x00400615
+  4009f8:	0040020b 	.word	0x0040020b
 
-00400a00 <RTT_init>:
+004009fc <RTT_init>:
 static float get_time_rtt(){
 	uint ul_previous_time = rtt_read_timer_value(RTT);
 }
 
 static void RTT_init(uint16_t pllPreScale, uint32_t IrqNPulses)
 {
-  400a00:	b580      	push	{r7, lr}
-  400a02:	b084      	sub	sp, #16
-  400a04:	af00      	add	r7, sp, #0
-  400a06:	4603      	mov	r3, r0
-  400a08:	6039      	str	r1, [r7, #0]
-  400a0a:	80fb      	strh	r3, [r7, #6]
+  4009fc:	b580      	push	{r7, lr}
+  4009fe:	b084      	sub	sp, #16
+  400a00:	af00      	add	r7, sp, #0
+  400a02:	4603      	mov	r3, r0
+  400a04:	6039      	str	r1, [r7, #0]
+  400a06:	80fb      	strh	r3, [r7, #6]
 	uint32_t ul_previous_time;
 
 	/* Configure RTT for a 1 second tick interrupt */
 	rtt_sel_source(RTT, false);
-  400a0c:	2100      	movs	r1, #0
-  400a0e:	4818      	ldr	r0, [pc, #96]	; (400a70 <RTT_init+0x70>)
-  400a10:	4b18      	ldr	r3, [pc, #96]	; (400a74 <RTT_init+0x74>)
-  400a12:	4798      	blx	r3
+  400a08:	2100      	movs	r1, #0
+  400a0a:	4818      	ldr	r0, [pc, #96]	; (400a6c <RTT_init+0x70>)
+  400a0c:	4b18      	ldr	r3, [pc, #96]	; (400a70 <RTT_init+0x74>)
+  400a0e:	4798      	blx	r3
 	rtt_init(RTT, pllPreScale);
-  400a14:	88fb      	ldrh	r3, [r7, #6]
-  400a16:	4619      	mov	r1, r3
-  400a18:	4815      	ldr	r0, [pc, #84]	; (400a70 <RTT_init+0x70>)
-  400a1a:	4b17      	ldr	r3, [pc, #92]	; (400a78 <RTT_init+0x78>)
-  400a1c:	4798      	blx	r3
+  400a10:	88fb      	ldrh	r3, [r7, #6]
+  400a12:	4619      	mov	r1, r3
+  400a14:	4815      	ldr	r0, [pc, #84]	; (400a6c <RTT_init+0x70>)
+  400a16:	4b17      	ldr	r3, [pc, #92]	; (400a74 <RTT_init+0x78>)
+  400a18:	4798      	blx	r3
 	
 	ul_previous_time = rtt_read_timer_value(RTT);
-  400a1e:	4814      	ldr	r0, [pc, #80]	; (400a70 <RTT_init+0x70>)
-  400a20:	4b16      	ldr	r3, [pc, #88]	; (400a7c <RTT_init+0x7c>)
-  400a22:	4798      	blx	r3
-  400a24:	60f8      	str	r0, [r7, #12]
+  400a1a:	4814      	ldr	r0, [pc, #80]	; (400a6c <RTT_init+0x70>)
+  400a1c:	4b16      	ldr	r3, [pc, #88]	; (400a78 <RTT_init+0x7c>)
+  400a1e:	4798      	blx	r3
+  400a20:	60f8      	str	r0, [r7, #12]
 	while (ul_previous_time == rtt_read_timer_value(RTT));
-  400a26:	bf00      	nop
-  400a28:	4811      	ldr	r0, [pc, #68]	; (400a70 <RTT_init+0x70>)
-  400a2a:	4b14      	ldr	r3, [pc, #80]	; (400a7c <RTT_init+0x7c>)
-  400a2c:	4798      	blx	r3
-  400a2e:	4602      	mov	r2, r0
-  400a30:	68fb      	ldr	r3, [r7, #12]
-  400a32:	429a      	cmp	r2, r3
-  400a34:	d0f8      	beq.n	400a28 <RTT_init+0x28>
+  400a22:	bf00      	nop
+  400a24:	4811      	ldr	r0, [pc, #68]	; (400a6c <RTT_init+0x70>)
+  400a26:	4b14      	ldr	r3, [pc, #80]	; (400a78 <RTT_init+0x7c>)
+  400a28:	4798      	blx	r3
+  400a2a:	4602      	mov	r2, r0
+  400a2c:	68fb      	ldr	r3, [r7, #12]
+  400a2e:	429a      	cmp	r2, r3
+  400a30:	d0f8      	beq.n	400a24 <RTT_init+0x28>
 	
 	rtt_write_alarm_time(RTT, IrqNPulses+ul_previous_time);
-  400a36:	683a      	ldr	r2, [r7, #0]
-  400a38:	68fb      	ldr	r3, [r7, #12]
-  400a3a:	4413      	add	r3, r2
-  400a3c:	4619      	mov	r1, r3
-  400a3e:	480c      	ldr	r0, [pc, #48]	; (400a70 <RTT_init+0x70>)
-  400a40:	4b0f      	ldr	r3, [pc, #60]	; (400a80 <RTT_init+0x80>)
-  400a42:	4798      	blx	r3
+  400a32:	683a      	ldr	r2, [r7, #0]
+  400a34:	68fb      	ldr	r3, [r7, #12]
+  400a36:	4413      	add	r3, r2
+  400a38:	4619      	mov	r1, r3
+  400a3a:	480c      	ldr	r0, [pc, #48]	; (400a6c <RTT_init+0x70>)
+  400a3c:	4b0f      	ldr	r3, [pc, #60]	; (400a7c <RTT_init+0x80>)
+  400a3e:	4798      	blx	r3
 
 	/* Enable RTT interrupt */
 	NVIC_DisableIRQ(RTT_IRQn);
-  400a44:	2003      	movs	r0, #3
-  400a46:	4b0f      	ldr	r3, [pc, #60]	; (400a84 <RTT_init+0x84>)
-  400a48:	4798      	blx	r3
+  400a40:	2003      	movs	r0, #3
+  400a42:	4b0f      	ldr	r3, [pc, #60]	; (400a80 <RTT_init+0x84>)
+  400a44:	4798      	blx	r3
 	NVIC_ClearPendingIRQ(RTT_IRQn);
-  400a4a:	2003      	movs	r0, #3
-  400a4c:	4b0e      	ldr	r3, [pc, #56]	; (400a88 <RTT_init+0x88>)
-  400a4e:	4798      	blx	r3
+  400a46:	2003      	movs	r0, #3
+  400a48:	4b0e      	ldr	r3, [pc, #56]	; (400a84 <RTT_init+0x88>)
+  400a4a:	4798      	blx	r3
 	NVIC_SetPriority(RTT_IRQn, 0);
-  400a50:	2100      	movs	r1, #0
-  400a52:	2003      	movs	r0, #3
-  400a54:	4b0d      	ldr	r3, [pc, #52]	; (400a8c <RTT_init+0x8c>)
-  400a56:	4798      	blx	r3
+  400a4c:	2100      	movs	r1, #0
+  400a4e:	2003      	movs	r0, #3
+  400a50:	4b0d      	ldr	r3, [pc, #52]	; (400a88 <RTT_init+0x8c>)
+  400a52:	4798      	blx	r3
 	NVIC_EnableIRQ(RTT_IRQn);
-  400a58:	2003      	movs	r0, #3
-  400a5a:	4b0d      	ldr	r3, [pc, #52]	; (400a90 <RTT_init+0x90>)
-  400a5c:	4798      	blx	r3
+  400a54:	2003      	movs	r0, #3
+  400a56:	4b0d      	ldr	r3, [pc, #52]	; (400a8c <RTT_init+0x90>)
+  400a58:	4798      	blx	r3
 	rtt_enable_interrupt(RTT, RTT_MR_ALMIEN);
-  400a5e:	f44f 3180 	mov.w	r1, #65536	; 0x10000
-  400a62:	4803      	ldr	r0, [pc, #12]	; (400a70 <RTT_init+0x70>)
-  400a64:	4b0b      	ldr	r3, [pc, #44]	; (400a94 <RTT_init+0x94>)
-  400a66:	4798      	blx	r3
+  400a5a:	f44f 3180 	mov.w	r1, #65536	; 0x10000
+  400a5e:	4803      	ldr	r0, [pc, #12]	; (400a6c <RTT_init+0x70>)
+  400a60:	4b0b      	ldr	r3, [pc, #44]	; (400a90 <RTT_init+0x94>)
+  400a62:	4798      	blx	r3
 }
-  400a68:	bf00      	nop
-  400a6a:	3710      	adds	r7, #16
-  400a6c:	46bd      	mov	sp, r7
-  400a6e:	bd80      	pop	{r7, pc}
-  400a70:	400e1830 	.word	0x400e1830
-  400a74:	004004a1 	.word	0x004004a1
-  400a78:	00400471 	.word	0x00400471
-  400a7c:	00400571 	.word	0x00400571
-  400a80:	004005b9 	.word	0x004005b9
-  400a84:	00400649 	.word	0x00400649
-  400a88:	0040067d 	.word	0x0040067d
-  400a8c:	004006b1 	.word	0x004006b1
-  400a90:	00400615 	.word	0x00400615
-  400a94:	004004f9 	.word	0x004004f9
+  400a64:	bf00      	nop
+  400a66:	3710      	adds	r7, #16
+  400a68:	46bd      	mov	sp, r7
+  400a6a:	bd80      	pop	{r7, pc}
+  400a6c:	400e1830 	.word	0x400e1830
+  400a70:	004004a1 	.word	0x004004a1
+  400a74:	00400471 	.word	0x00400471
+  400a78:	00400571 	.word	0x00400571
+  400a7c:	004005b9 	.word	0x004005b9
+  400a80:	00400649 	.word	0x00400649
+  400a84:	0040067d 	.word	0x0040067d
+  400a88:	004006b1 	.word	0x004006b1
+  400a8c:	00400615 	.word	0x00400615
+  400a90:	004004f9 	.word	0x004004f9
+  400a94:	00000000 	.word	0x00000000
 
 00400a98 <main>:
 
@@ -1785,7 +1784,7 @@ int main(void) {
   400c56:	4b41      	ldr	r3, [pc, #260]	; (400d5c <main+0x2c4>)
   400c58:	2200      	movs	r2, #0
   400c5a:	601a      	str	r2, [r3, #0]
-			speed = w*radius/3.6;
+			speed = w*radius*3.6;
   400c5c:	4b3b      	ldr	r3, [pc, #236]	; (400d4c <main+0x2b4>)
   400c5e:	ed93 7a00 	vldr	s14, [r3]
   400c62:	edd7 7a13 	vldr	s15, [r7, #76]	; 0x4c
@@ -1793,7 +1792,7 @@ int main(void) {
   400c6a:	4b2d      	ldr	r3, [pc, #180]	; (400d20 <main+0x288>)
   400c6c:	ee17 0a90 	vmov	r0, s15
   400c70:	4798      	blx	r3
-  400c72:	4c3b      	ldr	r4, [pc, #236]	; (400d60 <main+0x2c8>)
+  400c72:	4c37      	ldr	r4, [pc, #220]	; (400d50 <main+0x2b8>)
   400c74:	a31e      	add	r3, pc, #120	; (adr r3, 400cf0 <main+0x258>)
   400c76:	e9d3 2300 	ldrd	r2, r3, [r3]
   400c7a:	47a0      	blx	r4
@@ -1864,8 +1863,8 @@ int main(void) {
   400cf8:	00402539 	.word	0x00402539
   400cfc:	00402105 	.word	0x00402105
   400d00:	00400705 	.word	0x00400705
-  400d04:	00400861 	.word	0x00400861
-  400d08:	0040097d 	.word	0x0040097d
+  400d04:	0040085d 	.word	0x0040085d
+  400d08:	00400979 	.word	0x00400979
   400d0c:	400e1850 	.word	0x400e1850
   400d10:	00434bd8 	.word	0x00434bd8
   400d14:	00434bcc 	.word	0x00434bcc
@@ -1881,7 +1880,7 @@ int main(void) {
   400d3c:	204009ec 	.word	0x204009ec
   400d40:	00403275 	.word	0x00403275
   400d44:	204009e4 	.word	0x204009e4
-  400d48:	00400a01 	.word	0x00400a01
+  400d48:	004009fd 	.word	0x004009fd
   400d4c:	20400000 	.word	0x20400000
   400d50:	00403d2d 	.word	0x00403d2d
   400d54:	00403c61 	.word	0x00403c61
