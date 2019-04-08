@@ -2,6 +2,16 @@
 # Automatically-generated file. Do not edit or delete the file
 ################################################################################
 
+src\ASF\common\services\sleepmgr\sam\sleepmgr.c
+
+src\ASF\sam\drivers\acc\acc.c
+
+src\ASF\sam\drivers\rtc\rtc.c
+
+src\ASF\sam\drivers\rtt\rtt.c
+
+src\ASF\sam\drivers\tc\tc.c
+
 src\main.c
 
 src\ASF\common\services\delay\sam\cycle_counter.c
